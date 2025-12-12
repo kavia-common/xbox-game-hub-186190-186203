@@ -19,7 +19,10 @@ export default function Home() {
     setLoading(true);
     setError('');
     Api.listGames(debouncedQ)
-      .then(setGames)
+      .then((data) => {
+        // Ensure games is always an array
+        setGames(Array.isArray(data) ? data : []);
+      })
       .catch((e) => setError(e.message || 'Failed to load games'))
       .finally(() => setLoading(false));
   }, [debouncedQ]);
